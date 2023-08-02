@@ -16,8 +16,7 @@ spec:
       containers:
         - name: my-container-nginx   
           image: nginx
-      nodeSelector: #Chave para selecionar o node que tiver a label = disktype: ssd
-        disktype: ssd
+      nodeName: minikube-m03 #Define o no. Ele mata o pod se estiver em outro lugar.
 
   selector:
     matchLabels:
