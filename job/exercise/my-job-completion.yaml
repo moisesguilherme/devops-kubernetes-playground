@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+spec:
+  completions: 20
+  completionMode: "Indexed" # adiciona um index no nome do pod my-job-<index>-tdg7g (my-job-4-tdg7g)
+  parallelism: 5 # na hora de excutar o job, vai executar 5 podes ao mesmo tempo
+  activeDeadlineSeconds: 15
+  template:
+    metadata:
+      name: my-job-pod
+    spec:
+      containers:
+      - name: my-container-busybox
+        image: busybox
+        command:
+        - "bin/sh"
+        - "-c"
+        - "for i in 1 2; do echo Lucky number $i = $((1 + RANDOM % 70)); done"
+      restartPolicy: Never 
+
