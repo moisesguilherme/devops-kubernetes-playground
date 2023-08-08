@@ -9,5 +9,7 @@ data:
     database: mariadb
     database_uri: mariadb://localhost:3306
   teste.field: hello
+  teste2: hello2
+  teste3: hello3.0
 immutable: true
 
