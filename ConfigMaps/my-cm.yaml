@@ -1,13 +1,13 @@
-apiVersion: v1
 kind: ConfigMap
+apiVersion: v1
 metadata:
   name: my-cm
-  namespace: default
 data:
   #Connection database config
-  my.config.db: | #Vai ter apenas um arquivo no volume com as configurações
+  my.config.db: |
     database: mariadb
     database_uri: mariadb://localhost:3306
-  teste.field: hello
+  test.field: hello
+  test2: hello2.1
+  test3: hello3.0
 immutable: true
-
