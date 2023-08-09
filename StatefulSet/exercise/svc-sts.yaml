@@ -19,7 +19,7 @@ spec:
     matchLabels:
        app: nginx-app-pods
   serviceName: "svc-sts"
-  replicas: 5 #Scale Down representa uma ordem, do id maior para menor
+  replicas: 3 #Scale Down representa uma ordem, do id maior para menor
   template:
     metadata:
       labels:
@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: my-container
-        image: nginx
+        image: nginx:1.23.1
         volumeMounts:
         - name: my-pv
           mountPath: /usr/share/nginx/html
