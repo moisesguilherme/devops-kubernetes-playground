@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: node-red-replicaset
+  labels:
+    type: node-red
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      type: node-red
+  template:
+    metadata:
+      labels:
+        type: node-red
+    spec:
+      containers:
+      - name: node-red
+        image: nodered/node-red
+        ports:
+        - containerPort: 1880
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service-loadbalancer
+spec :
+  type: LoadBalancer
+  selector:
+    type: node-red
+  ports: 
+    - name: http-1
+      port: 1880
+      targetPort: 1880
+      nodePort: 30001

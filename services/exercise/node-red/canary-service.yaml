@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-app
+  ports: 
+    - name: http-1
+      port: 1880
+      targetPort: 1880
+      nodePort: 30001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-deployment
+spec:
+  replicas: 9  # 90% do tráfego
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: main-container
+        image: nodered/node-red:1.0.0-10-minimal
+        ports:
+        - containerPort: 1880
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary-deployment
+spec:
+  replicas: 1  # 10% do tráfego
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: canary-container
+        image: nodered/node-red
+        ports:
+        - containerPort: 1880
